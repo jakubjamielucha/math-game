@@ -2,12 +2,14 @@ package com.example.mathgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Random;
@@ -68,8 +70,17 @@ public class Game extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 answer.setText("");
-                gameQuestion();
                 resetTimer();
+
+                if(userLives <= 0){
+                    Toast.makeText(getApplicationContext(), "GAME OVER", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Game.this, Result.class);
+                    intent.putExtra("score", userScore);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    gameQuestion();
+                }
             }
         });
 
